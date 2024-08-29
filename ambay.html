@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOOM Partylist Tambayan</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #121212, #1e1e1e);
+            color: #eee;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            max-width: 900px;
+            margin: 20px auto;
+            box-sizing: border-box;
+            border-radius: 15px;
+            background-color: #1f1f1f;
+            border: 3px solid #ff66b2;
+            align-items: center;
+        }
+        .left-column, .right-column {
+            flex: 1;
+            min-width: 280px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .left-column {
+            border-right: 2px solid #333;
+        }
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px; /* Space between canvas and button */
+        }
+        h1 {
+            color: #f8f8f8;
+            font-size: 1.8rem;
+            margin-bottom: 50px;
+            text-transform: none; /* Remove uppercase transformation */
+            letter-spacing: 1px;
+            font-weight: 600;
+            text-shadow: 0 0 4px #ff66b2, 0 0 6px #ff66b2; /* Subtle glow effect */
+        }
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ddd;
+        }
+        .form-group select, 
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-family: Poppins;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background-color: #333;
+            color: #eee;
+            box-sizing: border-box;
+        }
+        .form-group select:focus, 
+        .form-group input[type="file"]:focus {
+            border-color: #ff66b2;
+            outline: none;
+        }
+        .form-group button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-family: Poppins;
+            color: #fff;
+            background-color: #ff66b2;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .form-group button:hover {
+            background-color: #ff3385;
+        }
+        .form-group button:active {
+            transform: scale(0.98);
+        }
+        p {
+            font-size: 12px;
+        }
+        #canvas {
+            background-color: #fff;
+            border: 4px solid #ff66b2;
+            border-radius: 12px;
+            width: 300px;
+            height: 300px;
+        }
+        .download-group {
+            text-align: center;
+        }
+        .download-group button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-family: Poppins;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .download-group button:hover {
+            background-color: #218838;
+        }
+        .download-group button:active {
+            transform: scale(0.98);
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+                gap: 20px;
+                align-items: center;
+            }
+            .left-column {
+                border-right: none;
+                border-bottom: 2px solid #333;
+            }
+            .right-column {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px; /* Space between canvas and button */
+            }
+            #canvas {
+                width: 80vw;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <h1>B.L.O.O.M Partylist Tambayan</h1>
+            <div class="form-group">
+                <label for="theme">Choose a Theme:</label>
+                <select id="theme">
+                    <option value="blue">Blue</option>
+                    <option value="pink" selected>Pink</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="role">Choose a Position:</label>
+                <select id="role">
+                    <option value="president">President</option>
+                    <option value="vice-president">Vice President</option>
+                    <option value="secretary">Secretary</option>
+                    <option value="treasurer">Treasurer</option>
+                    <option value="senator">Senator</option>
+                    <option value="governor">Governor</option>
+                    <option value="12-representative">Grade 12 representative</option>
+                    <option value="11-representative">Grade 11 representative</option>
+                    <option value="10-representative">Grade 10 representative</option>
+                    <option value="9-representative">Grade 9 representative</option>
+                    <option value="8-representative">Grade 8 representative</option>
+                    <option value="7-representative">Grade 7 representative</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="photo-upload">Upload Your Photo:</label>
+                <input type="file" id="photo-upload" accept="image/*" />
+            </div>
+            <div class="form-group">
+                <button id="apply-frame">Apply Frame</button>
+            </div>
+        </div>
+        <div class="right-column">
+            <!-- Plain text instruction -->
+            <p>Click on the photo to adjust its size and position.</p>
+            <canvas id="canvas"></canvas>
+            <div class="download-group">
+                <button id="download">Download Your Design</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js"></script>
+    <script>
+        const canvas = new fabric.Canvas('canvas', { preserveObjectStacking: true });
+        const canvasSize = 300;
+        const resolutionScale = 4; // Scale factor for high-resolution export
+
+        canvas.setWidth(canvasSize);
+        canvas.setHeight(canvasSize);
+
+        const framePaths = {
+            blue: {
+                president: 'images/Blue-president.png',
+                'vice-president': 'images/Blue-vice-president.png',
+                secretary: 'images/Blue-secretary.png',
+                treasurer: 'images/Blue-treasurer.png',
+                senator: 'images/Blue-senator.png',
+                governor: 'images/Blue-governor.png',
+                '12-representative': 'images/Blue-12representative.png',
+                '11-representative': 'images/Blue-11representative.png',
+                '10-representative': 'images/Blue-10representative.png',
+                '9-representative': 'images/Blue-9representative.png',
+                '8-representative': 'images/Blue-8representative.png',
+                '7-representative': 'images/Blue-7representative.png'
+            },
+            pink: {
+                president: 'images/Pink-president.png',
+                'vice-president': 'images/Pink-vice-president.png',
+                secretary: 'images/Pink-secretary.png',
+                treasurer: 'images/Pink-treasurer.png',
+                senator: 'images/Pink-senator.png',
+                governor: 'images/Pink-governor.png',
+                '12-representative': 'images/Pink-12representative.png',
+                '11-representative': 'images/Pink-11representative.png',
+                '10-representative': 'images/Pink-10representative.png',
+                '9-representative': 'images/Pink-9representative.png',
+                '8-representative': 'images/Pink-8representative.png',
+                '7-representative': 'images/Pink-7representative.png'
+            }
+        };
+
+        document.getElementById('apply-frame').addEventListener('click', () => {
+            const photoFile = document.getElementById('photo-upload').files[0];
+            const theme = document.getElementById('theme').value;
+            const role = document.getElementById('role').value;
+            const frameUrl = framePaths[theme][role];
+
+            if (photoFile && frameUrl) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    fabric.Image.fromURL(event.target.result, (photo) => {
+                        canvas.clear();
+
+                        // Calculate scaling factors
+                        const photoAspectRatio = photo.width / photo.height;
+                        const canvasAspectRatio = canvas.width / canvas.height;
+
+                        let scaleX, scaleY;
+                        if (photoAspectRatio > canvasAspectRatio) {
+                            // Photo is wider relative to its height compared to the canvas
+                            scaleX = canvas.width / photo.width;
+                            scaleY = scaleX; // Scale equally to maintain aspect ratio
+                        } else {
+                            // Photo is taller relative to its width compared to the canvas
+                            scaleY = canvas.height / photo.height;
+                            scaleX = scaleY; // Scale equally to maintain aspect ratio
+                        }
+
+                        // Apply scaling to fit the photo within the canvas
+                        photo.set({
+                            scaleX: scaleX,
+                            scaleY: scaleY,
+                            left: (canvas.width - photo.width * scaleX) / 2,
+                            top: (canvas.height - photo.height * scaleY) / 2,
+                            selectable: true,
+                            evented: true
+                        });
+                        canvas.add(photo);
+
+                        fabric.Image.fromURL(frameUrl, (frame) => {
+                            frame.set({
+                                selectable: false,
+                                evented: false,
+                                scaleX: canvas.width / frame.width,
+                                scaleY: canvas.height / frame.height
+                            });
+                            canvas.add(frame);
+                            frame.center();
+                            frame.sendToFront(); // Ensure frame is at the back
+                        });
+                    });
+                };
+                reader.readAsDataURL(photoFile);
+            } else {
+                alert('Please upload a photo and select both a theme and a role.');
+            }
+        });
+
+        document.getElementById('download').addEventListener('click', () => {
+            // Save the current dimensions of the canvas
+            const originalWidth = canvas.getWidth();
+            const originalHeight = canvas.getHeight();
+
+            // Adjust the canvas dimensions for high-resolution export
+            canvas.setWidth(canvasSize * resolutionScale);
+            canvas.setHeight(canvasSize * resolutionScale);
+
+            // Scale up the canvas content
+            canvas.setZoom(resolutionScale);
+
+            // Render the canvas to an image
+            const dataURL = canvas.toDataURL('image/png');
+
+            // Restore the original canvas dimensions
+            canvas.setWidth(originalWidth);
+            canvas.setHeight(originalHeight);
+            canvas.setZoom(1);
+
+            // Create a temporary link element and trigger download
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'DP-Blast-ni-brrttttt.png'; // Filename for the downloaded image
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>
