@@ -204,7 +204,7 @@
             </div>
         </div>
     </div>
-    <p>Created by: Robert Aaron A. Mantac<br>8/29/2024</p>
+    <p>Created by: Robert Aaron A. Mantac<br>8/29/2024</p> /* pasikat */
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js"></script>
     <script>
@@ -258,22 +258,19 @@
                     fabric.Image.fromURL(event.target.result, (photo) => {
                         canvas.clear();
 
-                        // Calculate scaling factors
                         const photoAspectRatio = photo.width / photo.height;
                         const canvasAspectRatio = canvas.width / canvas.height;
-
+                        
+                        // Para mag maintain aspect ratio(?), basta gagana
                         let scaleX, scaleY;
                         if (photoAspectRatio > canvasAspectRatio) {
-                            // Photo is wider relative to its height compared to the canvas
                             scaleX = canvas.width / photo.width;
-                            scaleY = scaleX; // Scale equally to maintain aspect ratio
+                            scaleY = scaleX;
                         } else {
-                            // Photo is taller relative to its width compared to the canvas
                             scaleY = canvas.height / photo.height;
-                            scaleX = scaleY; // Scale equally to maintain aspect ratio
+                            scaleX = scaleY;
                         }
-
-                        // Apply scaling to fit the photo within the canvas
+                        
                         photo.set({
                             scaleX: scaleX,
                             scaleY: scaleY,
@@ -293,7 +290,7 @@
                             });
                             canvas.add(frame);
                             frame.center();
-                            frame.sendToFront(); // Ensure frame is at the back
+                            frame.sendToFront(); // <==POTANGINAA
                         });
                     });
                 };
@@ -304,29 +301,23 @@
         });
 
         document.getElementById('download').addEventListener('click', () => {
-            // Save the current dimensions of the canvas
+            // Pano ya man
             const originalWidth = canvas.getWidth();
             const originalHeight = canvas.getHeight();
 
-            // Adjust the canvas dimensions for high-resolution export
             canvas.setWidth(canvasSize * resolutionScale);
             canvas.setHeight(canvasSize * resolutionScale);
-
-            // Scale up the canvas content
             canvas.setZoom(resolutionScale);
 
-            // Render the canvas to an image
             const dataURL = canvas.toDataURL('image/png');
 
-            // Restore the original canvas dimensions
             canvas.setWidth(originalWidth);
             canvas.setHeight(originalHeight);
             canvas.setZoom(1);
 
-            // Create a temporary link element and trigger download
             const link = document.createElement('a');
             link.href = dataURL;
-            link.download = 'DP-Blast-ni-brrttttt.png'; // Filename for the downloaded image
+            link.download = 'DP-Blast-ni-brrttttt.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
